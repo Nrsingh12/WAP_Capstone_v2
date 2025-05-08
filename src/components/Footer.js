@@ -1,14 +1,10 @@
 import React from 'react';
+import './Footer.css';
 
 function Footer() {
-  const currentYear = new Date().getFullYear();
-  
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <p>&copy; {currentYear} Shopping Cart with Product Quantities</p>
-        <p>Created as a React Capstone Project</p>
-      </div>
+      <p>© {new Date().getFullYear()} Shopping Cart Project</p>
     </footer>
   );
 }

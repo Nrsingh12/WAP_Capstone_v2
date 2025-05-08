@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
+import './ProductList.css';
 
 function ProductList({ cart, setCart }) {
   const [products, setProducts] = useState([]);
@@ -8,39 +9,24 @@ function ProductList({ cart, setCart }) {
 
   useEffect(() => {
     fetch('https://dummyjson.com/products')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+      .then(res => res.json())
       .then(data => {
         setProducts(data.products);
         setLoading(false);
       })
-      .catch(error => {
-        setError('Error fetching products: ' + error.message);
+      .catch(() => {
+        setError('Failed to fetch products');
         setLoading(false);
       });
   }, []);
 
-  if (loading) {
-    return <div className="loading">Loading products...</div>;
-  }
-
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
+  if (loading) return <div className="loading">Loading products...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="product-list">
       {products.map(product => (
-        <ProductCard 
-          key={product.id} 
-          product={product} 
-          cart={cart} 
-          setCart={setCart} 
-        />
+        <ProductCard key={product.id} product={product} cart={cart} setCart={setCart} />
       ))}
     </div>
   );

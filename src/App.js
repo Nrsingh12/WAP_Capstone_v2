@@ -14,26 +14,7 @@ function App() {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
-  const [user, setUser] = useState(null);
-  
-  // Load user from localStorage if available
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
 
-  // Save user to localStorage whenever it changes
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
-  
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
@@ -41,12 +22,12 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <Navbar cart={cart} user={user} setUser={setUser} />
+        <Navbar cart={cart} />
         <div className="main-content">
           <Routes>
             <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
             <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
-            <Route path="/login" element={<LoginPage setUser={setUser} />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/payment" element={<PaymentPage cart={cart} setCart={setCart} />} />
           </Routes>
